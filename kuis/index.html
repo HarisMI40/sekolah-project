@@ -66,12 +66,12 @@
                 `;
          
                 soal.pilihan.forEach((pilihan, index2)=> {
-                isiSoal += `
-                <div>
-                    <input type='radio' name='pilihan${index}' value='${index2}' /> 
-                    ${pilihan}
-                </div>`;
-            })
+                    isiSoal += `
+                    <div>
+                        <input type='radio' name='pilihan${index}' value='${index2}' /> 
+                        ${pilihan}
+                    </div>`;
+                })
             
             containerPilihan.innerHTML += (isiSoal);
 
