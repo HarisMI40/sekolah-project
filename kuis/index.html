@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .form-input{
+            display:block ;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1 id="judul">Judul</h1>
+    <form id="formSubmit">
+        <div id="container-pilihan"></div>
+        <button type="submit">Kirim</button>
+    </form>
+
+    <script>
+        var formSubmit = document.getElementById("formSubmit");
+        var judul = document.getElementById("judul");
+        var containerPilihan = document.getElementById("container-pilihan");
+        
+
+        var soal =
+        [
+            {
+                judul : "Berapakah jumlah Manusia Di bumi ini",
+                pilihan : ["10", "20", "30"],
+                jawaban : 0
+            }
+        ]
+
+        judul.innerText = soal[0].judul;
+
+        for(element in soal[0].pilihan){
+            var div = document.createElement("div");
+            div.innerHTML = `<input type='radio' id='input-pilihan' name='pilihan' value='${element}' /> ${soal[0].pilihan[element]}`;
+            containerPilihan.append(div);
+        }
+      
+
+     formSubmit.addEventListener("submit", (e) => {
+        e.preventDefault(e);
+        var formData = new FormData(formSubmit);
+        var pilihan = parseInt(formData.get("pilihan"));
+        var jawaban = parseInt(soal[0].jawaban);
+
+       if(pilihan === jawaban) alert("anda Benar");
+       if(pilihan !== jawaban) alert("anda salah");
+     });
+        
+    </script>
+</body>
+</html>
