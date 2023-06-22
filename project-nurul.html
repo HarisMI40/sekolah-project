@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+</head>
+<body>
+    <button onclick="tampilkanTeksAll()">Klik untuk Menampilkan Teks</button>
+    <p id="teks"></p>
+<script>
+        function tampilkanTeks1() {
+            var teksElement = document.getElementById("teks");
+            var teks = "good morning!";
+            teksElement.innerHTML += teks + "<br>";
+        };
+        function tampilkanTeks2() {
+            var teksElement = document.getElementById("teks");
+            var teks = "apakah kabar mu?";
+            teksElement.innerHTML += teks + "<br>";
+        };
+        function tampilkanTeks3() {
+            var teksElement = document.getElementById("teks");
+            var teks = "semoga harimu menyenangkan";
+            teksElement.innerHTML += teks + "<br>";
+        };
+        function tampilkanTeks4() {
+            var teksElement = document.getElementById("teks");
+            var teks = "see u!!";
+            teksElement.innerHTML += teks + "<br>";
+        };
+
+
+        var no = 1;
+        function tampilkanTeksAll() {
+            // console.log(no);
+            if(no == 1){
+                tampilkanTeks1();
+            }else if(no == 2){
+                tampilkanTeks2();
+            }
+            else if(no == 3){
+                tampilkanTeks3();
+            }
+            
+            else if(no == 4){
+                tampilkanTeks4();
+            }
+
+           else if(no == 5){
+            tampilkanTeks1();
+            no = 1;
+           }
+           no += 1;
+        
+        };
+    </script>
+
+  </body>
+</html>
