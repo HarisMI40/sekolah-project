@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kuis Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 10px;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Kuis Sederhana</h1>
+    <div id="quiz">
+        <div id="question" class="question"></div>
+        <div id="options" class="options"></div>
+        <button onclick="checkAnswer()">Submit</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        var questions = [
+            {
+                question: "Siapakah presiden pertama Indonesia?",
+                options: ["Soekarno", "Soeharto", "Joko Widodo", "Susilo Bambang Yudhoyono"],
+                answer: "Soekarno"
+            },
+            {
+                question: "Berapa jumlah provinsi di Indonesia?",
+                options: ["30", "32", "34", "36"],
+                answer: "34"
+            },
+            {
+                question: "Ibukota negara Indonesia adalah...",
+                options: ["Jakarta", "Surabaya", "Bandung", "Yogyakarta"],
+                answer: "Jakarta"
+            }
+        ];
+
+        var currentQuestion = 0; // Variabel untuk melacak pertanyaan saat ini
+        var score = 0; // Variabel untuk menyimpan skor
+
+        function displayQuestion() {
+            var questionElement = document.getElementById("question");
+            var optionsElement = document.getElementById("options");
+            var question = questions[currentQuestion];
+
+            questionElement.textContent = question.question; // Menampilkan pertanyaan pada elemen dengan id "question"
+            optionsElement.innerHTML = ""; // Mengosongkan elemen dengan id "options"
+
+            // Membuat pilihan jawaban sebagai elemen radio button dan menambahkannya ke elemen dengan id "options"
+            for (var i = 0; i < question.options.length; i++) {
+                var option = document.createElement("label");
+                var radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = "answer";
+                radio.value = question.options[i];
+
+                option.appendChild(radio);
+                option.appendChild(document.createTextNode(question.options[i]));
+                optionsElement.appendChild(option);
+            }
+        }
+
+        function checkAnswer() {
+            var selectedOption = document.querySelector("input[name=answer]:checked");
+
+            // Mengecek jawaban yang dipilih dengan jawaban yang benar dan menambahkan skor jika benar
+            if (selectedOption && selectedOption.value === questions[currentQuestion].answer) {
+                score++;
+            }
+
+            currentQuestion++; // Pindah ke pertanyaan selanjutnya
+
+            if (currentQuestion < questions.length) {
+                displayQuestion(); // Menampilkan pertanyaan berikutnya
+            } else {
+                displayResult(); // Menampilkan hasil akhir
+            }
+        }
+
+        function displayResult() {
+            var quizElement = document.getElementById("quiz");
+            var resultElement = document.getElementById("result");
+
+            quizElement.style.display = "none"; // Menyembunyikan elemen kuis setelah selesai
+            resultElement.textContent = "Skor Anda: " + score + "/" + questions.length; // Menampilkan skor
+        }
+
+        displayQuestion(); // Memanggil fungsi displayQuestion() untuk memulai kuis
+
+    </script>
+</body>
+
+</html>

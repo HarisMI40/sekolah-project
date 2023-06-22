@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kuis Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 10px;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kuis Sederhana</h1>
+    <div id="quiz">
+        <div id="questions">
+            <!-- Pertanyaan-pertanyaan akan ditampilkan di sini -->
+        </div>
+        <button onclick="checkAnswers()">Submit</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        var questions = [
+            {
+                question: "Siapakah presiden pertama Indonesia?",
+                options: ["Soekarno", "Soeharto", "Joko Widodo", "Susilo Bambang Yudhoyono"],
+                answer: "Soekarno"
+            },
+            {
+                question: "Berapa jumlah provinsi di Indonesia?",
+                options: ["30", "32", "34", "36"],
+                answer: "34"
+            },
+            {
+                question: "Ibukota negara Indonesia adalah...",
+                options: ["Jakarta", "Surabaya", "Bandung", "Yogyakarta"],
+                answer: "Jakarta"
+            }
+        ];
+
+        function displayQuestions() {
+            var questionsElement = document.getElementById("questions");
+
+            questions.forEach(function (question, index) {
+                var questionDiv = document.createElement("div");
+                questionDiv.className = "question";
+
+                var questionTitle = document.createElement("h3");
+                questionTitle.textContent = "Pertanyaan " + (index + 1) + ": " + question.question;
+                questionDiv.appendChild(questionTitle);
+
+                question.options.forEach(function (option) {
+                    var optionLabel = document.createElement("label");
+                    var radio = document.createElement("input");
+                    radio.type = "radio";
+                    radio.name = "answer" + index;
+                    radio.value = option;
+
+                    optionLabel.appendChild(radio);
+                    optionLabel.appendChild(document.createTextNode(option));
+                    questionDiv.appendChild(optionLabel);
+                });
+
+                questionsElement.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswers() {
+            var score = 0;
+
+            questions.forEach(function (question, index) {
+                var selectedOption = document.querySelector("input[name=answer" + index + "]:checked");
+
+                if (selectedOption && selectedOption.value === question.answer) {
+                    score++;
+                }
+            });
+
+            var resultElement = document.getElementById("result");
+            resultElement.textContent = "Skor Anda: " + score + "/" + questions.length;
+        }
+
+        displayQuestions();
+    </script>
+</body>
+</html>

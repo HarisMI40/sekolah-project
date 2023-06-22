@@ -14,46 +14,103 @@
 </head>
 <body>
     
-    <h1 id="judul">Judul</h1>
     <form id="formSubmit">
-        <div id="container-pilihan"></div>
-        <button type="submit">Kirim</button>
+        <div id="container-pilihan">
+            <!-- Soal akan di tampilkan disini -->
+        </div>
+        <button type="submit">Cek Hasil</button>
     </form>
+
+    <div id="container-hasil" style="margin-top: 10px;background-color: lightblue; width: 30%;">
+        <!-- hasil akan tampil disini -->
+    </div>
 
     <script>
         var formSubmit = document.getElementById("formSubmit");
         var judul = document.getElementById("judul");
         var containerPilihan = document.getElementById("container-pilihan");
+        const containerHasil = document.getElementById("container-hasil");
+        var nilai = 0;
         
-
-        var soal =
+        var jawabanSoal;
+        
+        var soals =
         [
             {
-                judul : "Berapakah jumlah Manusia Di bumi ini",
-                pilihan : ["10", "20", "30"],
+                judul : "Berapakah angka ganjil sampai hitungan ke 10",
+                pilihan : ["1", "3", "5"],
+                jawaban : 2
+            },
+            {
+                judul : "apa yang dimaksud dengan objek",
+                pilihan : [ "blue print", "instansiasi dari class", "variabel pada class"],
+                jawaban : 1
+            },
+            {
+                judul : "apa itu oop",
+                pilihan : ["paradigma pemrograman yang berorientasi objek", "function", "sebuah class"],
                 jawaban : 0
-            }
+            },
+            {
+                judul : "cara membuat sebuah objek, kita memerlukan kata kunci ...",
+                pilihan : ["class", "function", "new"],
+                jawaban : 2
+            },
         ]
+        var soalNo = 0;
 
-        judul.innerText = soal[0].judul;
+    function tampilkanPertanyaan(){
+        soals.forEach((soal, index) => {
+                var isiSoal = `
+                    <h1>${soal.judul}</h1>
+                `;
+         
+                soal.pilihan.forEach((pilihan, index2)=> {
+                isiSoal += `
+                <div>
+                    <input type='radio' name='pilihan${index}' value='${index2}' /> 
+                    ${pilihan}
+                </div>`;
+            })
+            
+            containerPilihan.innerHTML += (isiSoal);
 
-        for(element in soal[0].pilihan){
-            var div = document.createElement("div");
-            div.innerHTML = `<input type='radio' id='input-pilihan' name='pilihan' value='${element}' /> ${soal[0].pilihan[element]}`;
-            containerPilihan.append(div);
-        }
-      
+            var pilihan = document.getElementsByName("pilihan");
+            
+        });
+    }
 
-     formSubmit.addEventListener("submit", (e) => {
-        e.preventDefault(e);
+    function cekJawaban(){
         var formData = new FormData(formSubmit);
-        var pilihan = parseInt(formData.get("pilihan"));
-        var jawaban = parseInt(soal[0].jawaban);
+        soals.forEach((soal, index) => {
+            var pilihan = formData.get(`pilihan${index}`);
+            if(pilihan == soal.jawaban) nilai += 1;
+        });
+        console.log(`Nilai = ${nilai}`);
+        tampilkanHasil();
+    }
 
-       if(pilihan === jawaban) alert("anda Benar");
-       if(pilihan !== jawaban) alert("anda salah");
-     });
+    function tampilkanHasil(){
+        containerHasil.innerHTML = `
+            Nilai anda adalah ${nilai} / ${soals.length} 
+        `
+    }
+
+    function reset(){
+        nilai = 0;
+        // containerHasil.innerHTML = "";
+    }
+  
         
+    formSubmit.addEventListener("submit", (e) => {
+        e.preventDefault(e);
+        cekJawaban();
+       
+        reset();
+    });
+        
+
+        tampilkanPertanyaan(); 
     </script>
 </body>
 </html>
